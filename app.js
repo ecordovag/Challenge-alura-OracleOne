@@ -7,24 +7,33 @@ let amigos = [];
 let lista = document.getElementById("listaAmigos");
 let resultado = document.getElementById("resultado");
 
+function capitalizacionNombre(texto){
+    // Función para homogeneizar los nombres ingresados por el usuario
+
+    // Quitar los espacios al nombre ingresado y conversión a minúsculas
+    let textoSinEspacios = texto.trim().toLowerCase();
+    // Capitalización de la primera letra
+    return textoSinEspacios.charAt(0).toUpperCase() + textoSinEspacios.slice(1);
+}
+
 function agregarAmigo(){
     let amigo = document.getElementById("amigo").value;
 
-    // Eliminación de los espacios al inicio y al final del nombre ingresado.
-    let amigoSinEspacios = amigo.trim();
+    // Homogenización de la escritura del input del usuario usando la función capitalizaciónNombre
+    let amigoSinEspacios = capitalizacionNombre(amigo);
 
     // Verificación de que se haya ingresado un nombre valido.
     if (amigoSinEspacios == "") {
         return alert("Por favor, inserte un nombre válido");
 
     // Verificacion de que no se ingresen nombres repetidos. Detecta diferencias entre mayúsculas y minúsculas.
-    } else if (amigos.includes(amigoSinEspacios.toLowerCase()) == true) {
+    } else if (amigos.includes(amigoSinEspacios) == true) {
         limpiarCaja();
         return alert("No puedes repetir el mismo nombre");
 
     // Adición del nombre ingresado a la lista amigos
     } else  {
-        amigos.push(amigoSinEspacios.toLowerCase()); 
+        amigos.push(amigoSinEspacios); 
     }
 
     // Mostrar los nombres ingresados
