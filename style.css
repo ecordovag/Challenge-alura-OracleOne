@@ -1,11 +1,12 @@
 :root {
-    --color-primary: #4B69FD;
+    --color-primary: #B1C29E;
     --color-secondary: #FFF9EB;
-    --color-tertiary: #C4C4C4;
-    --color-button: #fe652b;
-    --color-button-hover: #e55720;
+    --color-tertiary: #98AF7F;
+    --color-button: #F0A04B;
+    --color-button-hover: #EB8413;
     --color-text: #444444;
     --color-white: #FFFFFF;
+    --color-disabled:#898989;
 }
 
 /* Estilos generales */
@@ -65,7 +66,7 @@ body {
     font-family: "Inter", serif;
     font-size: 36px;
     font-weight: 700;
-    color: var(--color-primary);
+    color: var(--color-tertiary);
     margin: 10px 0;
     text-align: center;
 }
@@ -88,8 +89,12 @@ body {
 }
 
 .button-container {
-    width: 300px;
+    display: flex;
+    gap: 2em;
+    align-items: center;   
+    width: 600px;
     justify-content: center;
+    
 }
 
 /* Estilos de entrada de texto */
@@ -116,13 +121,17 @@ button {
 }
 
 .button-add {
-    background-color: var(--color-tertiary);
-    color: var(--color-text);
+    background-color: var(--color-primary);
+    color: var(--color-white);
     border-radius: 0 25px 25px 0;
 }
 
 .button-add:hover {
-    background-color: #a1a1a1;
+    background-color: var(--color-tertiary);
+}
+
+.button-add:disabled {
+    background: var(--color-disabled);
 }
 
 /* Listas */
@@ -153,10 +162,15 @@ ul {
     font-size: 16px;
 }
 
+
 .button-draw img {
     margin-right: 40px;
 }
 
 .button-draw:hover {
     background-color: var(--color-button-hover);
+}
+
+.button-draw:disabled {
+    background: var(--color-disabled);
 }
