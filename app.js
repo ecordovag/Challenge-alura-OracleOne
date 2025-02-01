@@ -7,7 +7,7 @@ let amigos = [];
 const lista = document.getElementById("listaAmigos");
 const resultado = document.getElementById("resultado");
 
-function capitalizacionNombre(texto){
+function capitalizarNombre(texto){
     // Función para homogeneizar los nombres ingresados por el usuario
 
     // Conversión a minúsculas del input
@@ -25,26 +25,26 @@ function agregarAmigo(){
     const amigo = document.getElementById("amigo").value;
 
     // Homogenización de la escritura del input del usuario usando la función capitalizaciónNombre
-    const amigoSinEspacios = capitalizacionNombre(amigo);
+    const amigoSinEspacios = capitalizarNombre(amigo);
 
     // Validacion de presencia de solo letras en el nombre ingresado
     let tieneNumero = /\d/.test(amigoSinEspacios);
 
     // Verificación de que se haya ingresado un nombre valido.
     if (amigoSinEspacios === "") {
-        limpiarCaja();
+        limpiarCajaDeTexto();
         return alert("Por favor, inserte un nombre válido"); 
     }
     
     // Validación de que el nombre no tenga números
     if (tieneNumero) {
-        limpiarCaja();
+        limpiarCajaDeTexto();
         return alert("Por favor, inserte un nombre que no contenga números");
     }
 
     // Verificacion de que no se ingresen nombres repetidos. Detecta diferencias entre mayúsculas y minúsculas. 
     if (amigos.includes(amigoSinEspacios)) {
-        limpiarCaja();
+        limpiarCajaDeTexto();
         return alert("No puedes repetir el mismo nombre");   
     } 
 
@@ -55,7 +55,7 @@ function agregarAmigo(){
     listarAmigos();
 
     // Limpiar la caja de ingreso de nombres
-    limpiarCaja();
+    limpiarCajaDeTexto();
 }
 
 function listarAmigos(){
@@ -64,14 +64,14 @@ function listarAmigos(){
 
     // Mostrar en una lista los nombres de los amigos ingresados
     for (const amigo of amigos) {
-        const listItem = document.createElement("li");
-        listItem.textContent = amigo;
-        lista.append(listItem);
+        const elementoDeLista = document.createElement("li");
+        elementoDeLista.textContent = amigo;
+        lista.append(elementoDeLista);
     }
 }
 
 
-function limpiarCaja(){
+function limpiarCajaDeTexto(){
     // Limpiar la caja del formulario
     document.getElementById("amigo").value="";
 }
@@ -89,7 +89,7 @@ function sortearAmigo(){
     } else if (amigos.length === 1){
         alert("¡Para realizar el sorteo, necesitas ingresar al menos dos amigos!");
         lista.innerHTML = amigos;
-        limpiarCaja();
+        limpiarCajaDeTexto();
 
      // Elegir un amigo al azar y mostrar el resultado
     } else {
@@ -124,7 +124,13 @@ function reiniciarJuego(){
     document.getElementById("reiniciar").setAttribute("disabled", "true");
 
     // Limpiar el formulario de ingreso de datos
-    limpiarCaja();
+    limpiarCajaDeTexto();
 }
 
-// Enter para ingresar datos
+// Ingreso de amigo al presionar Enter
+document.getElementById("amigo").addEventListener("keypress", function(event) {
+if (event.key === "Enter") {
+    event.preventDefault();
+    agregarAmigo();
+    }
+});
