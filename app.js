@@ -27,9 +27,19 @@ function agregarAmigo(){
     // Homogenización de la escritura del input del usuario usando la función capitalizaciónNombre
     const amigoSinEspacios = capitalizacionNombre(amigo);
 
+    // Validacion de presencia de solo letras en el nombre ingresado
+    let tieneNumero = /\d/.test(amigoSinEspacios);
+
     // Verificación de que se haya ingresado un nombre valido.
     if (amigoSinEspacios === "") {
+        limpiarCaja();
         return alert("Por favor, inserte un nombre válido"); 
+    }
+    
+    // Validación de que el nombre no tenga números
+    if (tieneNumero) {
+        limpiarCaja();
+        return alert("Por favor, inserte un nombre que no contenga números");
     }
 
     // Verificacion de que no se ingresen nombres repetidos. Detecta diferencias entre mayúsculas y minúsculas. 
@@ -117,5 +127,4 @@ function reiniciarJuego(){
     limpiarCaja();
 }
 
-// Validación de números
 // Enter para ingresar datos
