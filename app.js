@@ -4,38 +4,43 @@
 // Lista inicial de amigos ingresados (vacía)
 let amigos = [];
 
-let lista = document.getElementById("listaAmigos");
-let resultado = document.getElementById("resultado");
+const lista = document.getElementById("listaAmigos");
+const resultado = document.getElementById("resultado");
 
 function capitalizacionNombre(texto){
     // Función para homogeneizar los nombres ingresados por el usuario
 
-    // Quitar los espacios al nombre ingresado y conversión a minúsculas
-    let textoSinEspacios = texto.trim().toLowerCase();
-    // Capitalización de la primera letra
-    return textoSinEspacios.charAt(0).toUpperCase() + textoSinEspacios.slice(1);
+    // Conversión a minúsculas del input
+    const textoMinusculas = texto.toLowerCase();
+    // Conversion de input a lista y eliminar espacios adicionales.
+    const listaTexto = textoMinusculas.split(" ").filter(Boolean);
+    // Conversión de la primera letra de cada palabra a mayúscula
+    for (let i=0; i<listaTexto.length; i++) {
+        listaTexto[i] = listaTexto[i][0].toUpperCase() + listaTexto[i].substr(1);
+    }
+    return listaTexto.join(" ");
 }
 
 function agregarAmigo(){
-    let amigo = document.getElementById("amigo").value;
+    const amigo = document.getElementById("amigo").value;
 
     // Homogenización de la escritura del input del usuario usando la función capitalizaciónNombre
-    let amigoSinEspacios = capitalizacionNombre(amigo);
+    const amigoSinEspacios = capitalizacionNombre(amigo);
 
     // Verificación de que se haya ingresado un nombre valido.
-    if (amigoSinEspacios == "") {
-        return alert("Por favor, inserte un nombre válido");
-
-    // Verificacion de que no se ingresen nombres repetidos. Detecta diferencias entre mayúsculas y minúsculas.
-    } else if (amigos.includes(amigoSinEspacios) == true) {
-        limpiarCaja();
-        return alert("No puedes repetir el mismo nombre");
-
-    // Adición del nombre ingresado a la lista amigos
-    } else  {
-        amigos.push(amigoSinEspacios); 
+    if (amigoSinEspacios === "") {
+        return alert("Por favor, inserte un nombre válido"); 
     }
 
+    // Verificacion de que no se ingresen nombres repetidos. Detecta diferencias entre mayúsculas y minúsculas. 
+    if (amigos.includes(amigoSinEspacios)) {
+        limpiarCaja();
+        return alert("No puedes repetir el mismo nombre");   
+    } 
+
+    // Adición del nombre ingresado a la lista amigos
+    amigos.push(amigoSinEspacios); 
+    
     // Mostrar los nombres ingresados
     listarAmigos();
 
@@ -48,8 +53,10 @@ function listarAmigos(){
     lista.innerHTML = "";
 
     // Mostrar en una lista los nombres de los amigos ingresados
-    for (i=0; i<=amigos.length; i++){
-        lista.append(Object.assign(document.createElement("li"),{textContent: amigos[i]}));
+    for (const amigo of amigos) {
+        const listItem = document.createElement("li");
+        listItem.textContent = amigo;
+        lista.append(listItem);
     }
 }
 
@@ -65,19 +72,19 @@ function sortearAmigo(){
     lista.innerHTML = "";
 
     // Verificar que la lista amigos no este vacía.
-    if (amigos.length==0){
+    if (amigos.length===0){
         alert("¡Introduce los nombres de tus amigos para poder realizar el sorteo!");
 
     // Verificar que haya al menos 2 amigos en la lista para poder realizar el sorteo
-    } else if (amigos.length == 1){
+    } else if (amigos.length === 1){
         alert("¡Para realizar el sorteo, necesitas ingresar al menos dos amigos!");
         lista.innerHTML = amigos;
         limpiarCaja();
 
      // Elegir un amigo al azar y mostrar el resultado
     } else {
-       let indiceSorteado = Math.floor(Math.random()*amigos.length);
-       let amigoSorteado = amigos[indiceSorteado];
+       const indiceSorteado = Math.floor(Math.random()*amigos.length);
+       const amigoSorteado = amigos[indiceSorteado];
        resultado.innerHTML = `Tu amigo secreto es ${amigoSorteado}`;
     }
     
@@ -109,3 +116,6 @@ function reiniciarJuego(){
     // Limpiar el formulario de ingreso de datos
     limpiarCaja();
 }
+
+// Validación de números
+// Enter para ingresar datos
