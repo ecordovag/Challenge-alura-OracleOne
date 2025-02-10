@@ -7,31 +7,30 @@ let amigos = [];
 const lista = document.getElementById("listaAmigos");
 const resultado = document.getElementById("resultado");
 
-function capitalizarNombre(texto){
-    // Función para homogeneizar los nombres ingresados por el usuario
+function capitalizarNombre(texto) {
+    // Devuelve el nombre ingresado con la primera letra de cada palabra en mayúsculas
 
-    // Conversión a minúsculas del input
-    const textoMinusculas = texto.toLowerCase();
-    // Conversion de input a lista y eliminar espacios adicionales.
-    const listaTexto = textoMinusculas.split(" ").filter(Boolean);
-    // Conversión de la primera letra de cada palabra a mayúscula
-    for (let i=0; i<listaTexto.length; i++) {
-        listaTexto[i] = listaTexto[i][0].toUpperCase() + listaTexto[i].substr(1);
-    }
-    return listaTexto.join(" ");
+    return texto
+      .trim() // Elimina espacios al inicio y al final
+      .split(/\s+/) // Divide y guarda el nombre en una lista usando cualquier cantidad de espacios
+      .map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1).toLowerCase()) // Capitaliza la primera letra del nombre ingresado
+      .join(' '); // Une la lista generada devuelta a un string
 }
 
+
 function agregarAmigo(){
+    // Agrega cada amigo ingresado por el usuario a la página
+
     const amigo = document.getElementById("amigo").value;
 
     // Homogenización de la escritura del input del usuario usando la función capitalizaciónNombre
-    const amigoSinEspacios = capitalizarNombre(amigo);
+    const amigoIngresado = capitalizarNombre(amigo);
 
     // Validacion de presencia de solo letras en el nombre ingresado
-    let tieneNumero = /\d/.test(amigoSinEspacios);
+    let tieneNumero = /\d/.test(amigoIngresado);
 
     // Verificación de que se haya ingresado un nombre valido.
-    if (amigoSinEspacios === "") {
+    if (amigoIngresado === "") {
         limpiarCajaDeTexto();
         return alert("Por favor, inserte un nombre válido"); 
     }
@@ -43,13 +42,13 @@ function agregarAmigo(){
     }
 
     // Verificacion de que no se ingresen nombres repetidos. Detecta diferencias entre mayúsculas y minúsculas. 
-    if (amigos.includes(amigoSinEspacios)) {
+    if (amigos.includes(amigoIngresado)) {
         limpiarCajaDeTexto();
         return alert("No puedes repetir el mismo nombre");   
     } 
 
     // Adición del nombre ingresado a la lista amigos
-    amigos.push(amigoSinEspacios); 
+    amigos.push(amigoIngresado); 
     
     // Mostrar los nombres ingresados
     listarAmigos();
@@ -78,8 +77,9 @@ function limpiarCajaDeTexto(){
 
 
 function sortearAmigo(){
-    // Vaciar la lista de amigos mostrada
-    lista.innerHTML = "";
+    // Función que devuelve el nombre de un amigo ingresado al azar.
+
+    lista.innerHTML = ""; // Vaciar la lista de amigos mostrada
 
     // Verificar que la lista amigos no este vacía.
     if (amigos.length===0){
@@ -99,33 +99,40 @@ function sortearAmigo(){
     }
     
     if (amigos.length >=2){
-         // Desactivar botón "Sortear amigo"
-        document.getElementById("sortearAmigo").setAttribute("disabled", "true");
-        // Desactivar botón "Añadir"
-        document.getElementById("anadir").setAttribute("disabled", "true");
-        // Activar botón "Nuevo Juego"
-        document.getElementById("reiniciar").removeAttribute('disabled');
+        desactivarBoton("sortearAmigo"); // Desactivar botón "Sortear amigo"
+        desactivarBoton("anadir"); // Desactivar botón "Añadir" 
+        activarBoton("reiniciar"); // Activar botón "Nuevo Juego"
+        
     }
 }
 
 
 function reiniciarJuego(){
-    // Vaciar el resultado del juego anterior
-    resultado.innerHTML = "";
+    // Funcion para restaurar los valores iniciales del juego
 
-    // Actualización de la lista de amigos ingresados
-    amigos = [];
+    resultado.innerHTML = ""; // Vaciar el resultado del juego anterior
+    
+    amigos = []; // Actualización de la lista de amigos ingresados
 
-    // Activar botón "Añadir"
-    document.getElementById("anadir").removeAttribute('disabled');
-    // Activar botón "Sortear amigo"
-    document.getElementById("sortearAmigo").removeAttribute('disabled');
-    // Desactivar botón "Nuevo juego"
-    document.getElementById("reiniciar").setAttribute("disabled", "true");
-
-    // Limpiar el formulario de ingreso de datos
-    limpiarCajaDeTexto();
+    activarBoton("anadir"); // Activar botón "Añadir"  
+    activarBoton("sortearAmigo"); // Activar botón "Sortear amigo"    
+    desactivarBoton("reiniciar"); // Desactivar botón "Nuevo juego"
+   
+    limpiarCajaDeTexto(); // Limpiar el formulario de ingreso de datos
 }
+
+
+function activarBoton(boton) {
+    // Funcion para activar un boton de la pagina
+    document.getElementById(boton).removeAttribute('disabled');
+}
+
+
+function desactivarBoton(boton) {
+    // Funcion para desactivar un boton de la pagina
+    document.getElementById(boton).setAttribute("disabled", "true");
+}
+
 
 // Ingreso de amigo al presionar Enter
 document.getElementById("amigo").addEventListener("keypress", function(event) {
