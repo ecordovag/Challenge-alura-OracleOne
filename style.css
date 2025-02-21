@@ -7,6 +7,7 @@
     --color-text: #444444;
     --color-white: #FFFFFF;
     --color-disabled:#898989;
+    --color-footer: #8DA672;
 }
 
 /* Estilos generales */
@@ -17,11 +18,12 @@
 }
 
 body {
-    height: 100vh;
     background-color: var(--color-primary);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 }
 
 .main-content {
@@ -40,22 +42,28 @@ body {
     padding: 40px 0 0;
 }
 
+.imagen__amigo{
+    width: 30%;
+}
+
 /* Sección de entrada */
 .input-section {
-    flex: 60%;
+    flex: 1;
     background-color: var(--color-secondary);
     border: 1px solid #000;
-    border-radius: 64px 64px 0 0;
+    /* border-radius: 64px 64px 0 0; */
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
     width: 100%;
+    min-height: 100vh;
+    
 }
 
 /* Títulos */
 .main-title {
-    font-size: 48px;
+    font-size: 3rem;
     font-family: "Merriweather", serif;
     font-weight: 900;
     font-style: italic;
@@ -64,7 +72,7 @@ body {
 
 .section-title {
     font-family: "Inter", serif;
-    font-size: 36px;
+    font-size: 2rem;
     font-weight: 700;
     color: var(--color-tertiary);
     margin: 10px 0;
@@ -85,14 +93,15 @@ body {
     padding: 10px;
     border: 2px solid #000;
     border-radius: 25px 0 0 25px;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .button-container {
     display: flex;
     gap: 2em;
     align-items: center;   
-    width: 600px;
+    width: 100%;
+    max-width: 500px;
     justify-content: center;
     
 }
@@ -101,7 +110,7 @@ body {
 .input-title {
     flex: 1;
     padding: 10px 15px;
-    font-size: 16px;
+    font-size: 1rem;
     border: 2px solid #333;
     border-right: none;
     border-radius: 25px 0 0 25px;
@@ -113,7 +122,7 @@ body {
 button {
     padding: 15px 30px;
     font-family: "Inter", sans-serif;
-    font-size: 16px;
+    font-size: 1rem;
     border: 2px solid #000;
     border-radius: 25px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -134,19 +143,20 @@ button {
     background: var(--color-disabled);
 }
 
+
 /* Listas */
 ul {
     list-style-type: none;
     color: var(--color-text);
     font-family: "Inter", sans-serif;
-    font-size: 18px;
+    font-size: 1.125rem;
     margin: 20px 0;
 }
 
 .result-list {
     margin-top: 15px;
     color: #05DF05;
-    font-size: 22px;
+    font-size: 1.30rem;
     font-weight: bold;
     text-align: center;
 }
@@ -155,16 +165,17 @@ ul {
 .button-draw {
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 50%;
     padding: 10px 40px;
     color: var(--color-white);
     background-color: var(--color-button);
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 
 .button-draw img {
     margin-right: 40px;
+    width: 25px;
 }
 
 .button-draw:hover {
@@ -175,4 +186,45 @@ ul {
     background: var(--color-disabled);
 }
 
+.footer {
+    background-color:var(--color-footer);
+    padding: 10px;
+    width: 100%;
+    color:var(--color-secondary);
+    text-align: center;
+    font-family: "Merriweather", serif;
+}
 
+@media (max-width: 1000px){
+
+    .main-title {
+        font-size: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+    .button-container{
+        flex-direction: column;
+        
+    }
+    .footer{
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 390px) {
+    .button-container {
+        flex-direction: column;
+    }
+
+    button {
+        font-size: 0.8rem;
+        padding: 10px 20px; 
+    }
+
+    .button-draw img {
+        width: 20px;
+        margin-right: 20px; 
+    }
+}
